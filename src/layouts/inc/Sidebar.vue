@@ -3,17 +3,18 @@
     <a href="#" class="brand-link">
       <img src="../../../node_modules/admin-lte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
         class="brand-image img-circle elevation-3" style="opacity: 0.8" />
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">Delivery App</span>
     </a>
 
     <div class="sidebar">
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex align-items-center">
         <div class="image">
           <img src="../../../node_modules/admin-lte/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
             alt="User Image" />
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">{{ user.nombre + ' ' + user.apellido }}</a>
+          <span class="text-sm d-block text-secondary">{{ user.role }}</span>
         </div>
       </div>
 
@@ -73,10 +74,14 @@
 </template>
 <script>
 import NavItem from './NavItem.vue';
+import {mapGetters} from "vuex";
 export default {
     components:{
         NavItem
-    }
+    },
+  computed: {
+      ...mapGetters('auth', ['user'])
+  }
 };
 </script>
 

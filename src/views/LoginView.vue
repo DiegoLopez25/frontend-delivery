@@ -10,34 +10,55 @@
             Por favor ingrese su usuario y contrase&ntilde;a
           </p>
           <form v-on:submit.prevent="login">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" v-model="usuario" placeholder="Usuario" />
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-user"></span>
+            <div class="form-group">
+              <div class="input-group">
+                <input
+                    type="text"
+                    class="form-control"
+                    :class="{'is-invalid': vErrors.username}"
+                    v-model="data.username"
+                    placeholder="Usuario"
+                />
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                  </div>
                 </div>
               </div>
+              <span class="text-danger text-sm" v-if="vErrors.username">
+                {{ vErrors.username }}
+              </span>
             </div>
-            <div class="input-group mb-3">
-              <input
-                type="password"
-                class="form-control"
-                placeholder="Password"
-                v-model="password"
-              />
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-lock"></span>
+
+            <div class="form-group">
+              <div class="input-group">
+                <input
+                    type="password"
+                    class="form-control"
+                    :class="{'is-invalid':vErrors.password}"
+                    placeholder="Password"
+                    v-model="data.password"
+                />
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                  </div>
                 </div>
               </div>
+
+              <span class="text-danger text-sm" v-if="vErrors.password">
+                {{ vErrors.password }}
+              </span>
+
             </div>
-            <div class="social-auth-links text-center mb-3">
-            <button type="submit" class="btn btn-block btn-success">
-              Iniciar sesion
-            </button>
-          </div>
+
+            <div class="text-center mb-3">
+              <button type="submit" class="btn btn-block btn-success">
+                {{ sending ? 'Espere por favor' : 'Iniciar sesion' }}
+              </button>
+            </div>
           </form>
-          
+
         </div>
       </div>
     </div>
@@ -45,41 +66,46 @@
 </template>
 
 <script>
-import axios from "axios";
+import {mapGetters, mapActions} from "vuex";
 
-  export default{ 
-    data:
-      function(){
-      return{
-          usuario: "",
-          password: ""
-        }
-      }
-    ,
-    methods:{
-       login (){
-       //para enviar como dataform 
-          const formData =  new FormData();
-          formData.append('username',this.usuario);
-          formData.append('password',this.password); 
-          //para enviar en formato JSON
-          /*
-          cosnt data = {
-            username : 'admin',
-            password : 'admin'
-          }
-          
-          */
+export default {
 
-
-        axios.post( "/auth/login",formData).then((res) => {
-          console.log(res.data)
-        }).catch((e) => {
-          console.log(e)
-        })
-      }
+  data() {
+    return {
+      data: {
+        username: null,
+        password: null
+      },
+      sending: false
     }
-    
+  },
+  computed: {
+    ...mapGetters({
+      vErrors: 'errors'
+    })
+  },
+
+  methods: {
+    ...mapActions('auth', ['sendLoginRequest']),
+
+    login() {
+
+      this.sending = true;
+
+      this.sendLoginRequest(this.data)
+          .then(() => {
+            this.sending = false;
+            this.$router.push('/dashboard')
+          })
+          .catch(() => {
+            this.sending = false;
+          })
+
+
+    }
+
   }
+
+}
 
 </script>

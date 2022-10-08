@@ -1,16 +1,31 @@
-import { defineStore } from 'pinia'
+import {createStore} from "vuex";
 
-export const useStore = defineStore("storeDelibery",{
-  state: () => {
-    return{
-      token : null
+import auth from "./modules/auth"
+
+const store = createStore({
+
+  state:{
+    errors: [],
+  },
+
+  getters : {
+    errors: state => state.errors
+  },
+
+  mutations: {
+    SET_ERRORS(state, errors) {
+      state.errors = errors
     }
   },
-  getters: {
-    setToken(state, payload){
-      state.token = payload
-    }
-  },
+
   actions: {
+
+  },
+
+  modules: {
+    auth
   }
+
 })
+
+export default store;

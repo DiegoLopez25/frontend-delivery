@@ -16,11 +16,11 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
           <a href="#" class="dropdown-item">
-            <i class="fas fa-user mr-2"></i> Profile
+            <i class="fas fa-user mr-2"></i> Perfil
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-sign-out-alt mr-2"></i> Log Out
+          <a href="#" class="dropdown-item" @click="logout">
+            <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
           </a>
         </div>
       </li>
@@ -29,7 +29,16 @@
 </template>
 
 <script>
-export default {};
+import {mapActions} from "vuex";
+
+export default {
+  methods: {
+    ...mapActions('auth', ['sendLogoutRequest']),
+    logout(){
+      this.sendLogoutRequest();
+    }
+  }
+};
 </script>
 
 <style>
