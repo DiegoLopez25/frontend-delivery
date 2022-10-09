@@ -10,6 +10,12 @@ import TiendaView from "../views/TiendaViews/TiendaView.vue";
 import EditarTiendaView from "../views/TiendaViews/EditarTiendaView.vue";
 import NuevaTiendaView from "../views/TiendaViews/NuevaTiendaView.vue";
 
+//StoreCategory
+import StoreCategoryIndex from "../views/StoreCategory/Index.vue";
+import StoreCategoryCreate from "../views/StoreCategory/Create.vue";
+import StoreCategoryEdit from "../views/StoreCategory/Edit.vue";
+import StoreCategoryShow from "../views/StoreCategory/Show.vue";
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -30,48 +36,65 @@ const router = createRouter({
                         title: 'Dashboard',
                     }
                 },
+
                 {
-                    path: 'categoria-tienda',
-                    name: 'categoria-tienda',
-                    component: CategoriaView
-                },
-                {
-                    path: 'categoria-tienda/nueva-categoria',
-                    name: 'nueva-categoria',
-                    component: NuevaCategoriaView
-                },
-                {
-                    path: 'usuarios',
+                    path: '/usuarios',
                     name: 'usuarios',
                     component: UsuarioView
                 },
                 {
-                    path: 'usuarios/nuevo-usuario',
+                    path: '/usuarios/nuevo-usuario',
                     name: 'nuevo-usuario',
                     component: NuevoUsuarioView
                 },
                 {
-                    path: 'usuarios/editar-usuario',
+                    path: '/usuarios/editar-usuario',
                     name: 'editar-usuario',
                     component: EditarUsuarioView
                 },
 
                 {
-                    path: 'tiendas',
+                    path: '/tiendas',
                     name: 'tiendas',
                     component: TiendaView
                 },
 
                 {
-                    path: 'tiendas/editar-tienda',
+                    path: '/tiendas/editar-tienda',
                     name: 'editar-tienda',
                     component: EditarTiendaView
                 },
 
                 {
-                    path: 'tiendas/nueva-tienda',
+                    path: '/tiendas/nueva-tienda',
                     name: 'nueva-tienda',
                     component: NuevaTiendaView
+                },
+
+                //Store categories
+                {
+                    path: '/categoria-tienda',
+                    name: 'StoreCategoryIndex',
+                    component: StoreCategoryIndex,
+                    meta: {title: 'Categorias de Tiendas'}
+                },
+                {
+                    path: '/categoria-tienda/crear',
+                    name: 'StoreCategoryCreate',
+                    component: StoreCategoryCreate,
+                    meta: {title: 'Crear Categoría de Tienda'}
+                },
+                {
+                    path: '/categoria-tienda/:id/editar',
+                    name: 'StoreCategoryEdit',
+                    component: StoreCategoryEdit,
+                    meta: {title: 'Editar Categoría de Tienda'}
+                },
+                {
+                    path: '/categoria-tienda/detalles/:id',
+                    name: 'StoreCategoryShow',
+                    component: StoreCategoryShow,
+                    meta: {title: 'Detalles de la Categoría de Tienda'}
                 },
             ]
         },
